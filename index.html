@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101b33">
+<title>GameVault | Learning & Media Hub</title>
+
+<style>
+:root {
+  --bg: #0b1222;
+  --panel: #121e34;
+  --panel2: #192944;
+  --line: #293a57;
+  --text: #eef4ff;
+  --muted: #a8b8d2;
+  --blue: #66b8ff;
+  --mint: #65dfc0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(ellipse at 15% -10%, #1e3b63 0, transparent 42%), var(--bg);
+  color: var(--text);
+  font: 15px/1.5 system-ui, sans-serif;
+}
+
+button, input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.app {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 245px 1fr;
+}
+
+aside {
+  background: #0d172a;
+  border-right: 1px solid var(--line);
+  padding: 22px 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 0 9px;
+}
+
+.brand-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 13px;
+  background: linear-gradient(135deg, #5ab7ff, #6be0c3);
+  display: grid;
+  place-items: center;
+  color: #081629;
+  font-size: 21px;
+  font-weight: 900;
+}
+
+.brand strong {
+  font-size: 18px;
+}
+
+.brand small {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.nav-label {
+  color: #7185a5;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  padding: 0 12px;
+  margin-bottom: 7px;
+}
+
+.nav {
+  display: grid;
+  gap: 5px;
+}
+
+.nav button {
+  border: 0;
+  background: transparent;
+  color: #b9c8df;
+  text-align: left;
+  padding: 11px 12px;
+  border-radius: 11px;
+}
+
+.nav button:hover,
+.nav button.active {
+  background: #1b2c48;
+  color: white;
+}
+
+.nav button.active {
+  box-shadow: inset 3px 0 var(--blue);
+}
+
+.side-note {
+  margin-top: auto;
+  background: #14243c;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 13px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.side-note b {
+  color: #eaf3ff;
+  display: block;
+}
+
+main {
+  min-width: 0;
+  padding: 28px clamp(18px, 4vw, 48px) 50px;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 27px;
+}
+
+.crumb {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.search {
+  width: min(360px, 55vw);
+}
+
+.search input {
+  width: 100%;
+  background: #121e34;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 11px 14px;
+  color: white;
+  outline: none;
+}
+
+.hero {
+  background: linear-gradient(115deg, #173b61, #17364f 55%, #16463f);
+  border: 1px solid #315779;
+  border-radius: 22px;
+  padding: 35px;
+}
+
+.eyebrow {
+  color: #9ed8ff;
+  font-weight: 800;
+  font-size: 11px;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  font-size: clamp(27px, 4vw, 42px);
+  line-height: 1.1;
+  margin: 10px 0;
+}
+
+.hero p {
+  color: #c2d6eb;
+  margin-bottom: 19px;
+}
+
+.primary {
+  border: 0;
+  border-radius: 10px;
+  background: #e8f5ff;
+  color: #10233b;
+  font-weight: 800;
+  padding: 10px 15px;
+}
+
+.section-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  margin: 28px 0 14px;
+}
+
+.section-head h2 {
+  font-size: 19px;
+  margin: 0;
+}
+
+.section-head p {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 13px;
+}
+
+.tile {
+  background: linear-gradient(145deg, #172640, #111d31);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 17px;
+  text-align: left;
+  color: var(--text);
+  min-height: 140px;
+}
+
+.tile:hover {
+  transform: translateY(-3px);
+  border-color: #5b91c3;
+}
+
+.tile-icon {
+  font-size: 27px;
+  margin-bottom: 12px;
+}
+
+.tile b {
+  display: block;
+}
+
+.tile small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 14px;
+}
+
+.panel {
+  background: #111d31;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 17px;
+}
+
+.panel h3 {
+  margin: 0 0 5px;
+  font-size: 15px;
+}
+
+.panel p {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.view {
+  display: none;
+}
+
+.view.active {
+  display: block;
+}
+
+.view-title {
+  margin: 4px 0 5px;
+  font-size: 27px;
+}
+
+.view-desc {
+  color: var(--muted);
+  margin-bottom: 20px;
+  font-size: 13px;
+}
+
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 13px;
+}
+
+.game-card {
+  background: #14233a;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  padding: 15px;
+}
+
+.game-card p {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.game-card button,
+.secondary {
+  background: #253b5c;
+  border: 1px solid #385477;
+  color: #e9f3ff;
+  border-radius: 8px;
+  padding: 7px 10px;
+  font-size: 12px;
+}
+
+.viewer {
+  background: #0b1425;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.viewer-bar {
+  padding: 11px 14px;
+  background: #15243c;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.viewer-screen {
+  min-height: 360px;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+}
+
+.viewer-screen iframe {
+  width: 100%;
+  height: 65vh;
+  min-height: 360px;
+  border: 0;
+  border-radius: 9px;
+  background: white;
+}
+
+.empty {
+  text-align: center;
+  max-width: 460px;
+}
+
+.empty .big {
+  font-size: 45px;
+}
+
+.empty p {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.field-row {
+  display: flex;
+  gap: 8px;
+  margin: 14px 0;
+}
+
+.field-row input {
+  flex: 1;
+  min-width: 0;
+  background: #0b1629;
+  border: 1px solid var(--line);
+  color: white;
+  border-radius: 9px;
+  padding: 10px;
+}
+
+.notice {
+  margin-top: 15px;
+  padding: 12px 14px;
+  border-radius: 11px;
+  background: #132943;
+  border: 1px solid #2b4c6e;
+  color: #b9cde4;
+  font-size: 12px;
+}
+
+.game-stage {
+  width: min(100%, 560px);
+  text-align: center;
+}
+
+.ttt {
+  display: grid;
+  grid-template-columns: repeat(3, 80px);
+  gap: 7px;
+  justify-content: center;
+  margin: 16px;
+}
+
+.ttt button {
+  height: 80px;
+  background: #1c3150;
+  border: 1px solid #3c5a7d;
+  border-radius: 12px;
+  color: white;
+  font-size: 30px;
+}
+
+footer {
+  color: #7285a2;
+  font-size: 11px;
+  margin-top: 35px;
+  text-align: center;
+}
+
+@media(max-width:1000px) {
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .game-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media(max-width:700px) {
+  .app {
+    display: block;
+  }
+
+  aside {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    padding: 10px 12px;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+    gap: 10px;
+  }
+
+  .nav-label,
+  .side-note {
+    display: none;
+  }
+
+  .nav {
+    display: flex;
+    overflow: auto;
+  }
+
+  .nav button {
+    white-space: nowrap;
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  main {
+    padding: 18px 14px 35px;
+  }
+
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .game-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media(max-width:420px) {
+  .cards,
+  .game-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .field-row {
+    flex-direction: column;
+  }
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+<aside>
+  <div class="brand">
+    <div class="brand-icon">G</div>
+    <div>
+      <strong>GameVault</strong>
+      <small>Learning & media hub</small>
+    </div>
+  </div>
+
+  <div>
+    <div class="nav-label">WORKSPACE</div>
+    <nav class="nav" id="nav">
+      <button class="active" data-view="home">⌂ Overview</button>
+      <button data-view="games">🎮 Games</button>
+      <button data-view="video">▶ Video</button>
+      <button data-view="anime">🎞 Anime</button>
+      <button data-view="study">📚 Study tools</button>
+    </nav>
+  </div>
+
+  <div class="side-note">
+    <b>One-page workspace</b>
+    Supported content stays in this window.
+  </div>
+</aside>
+
+<main>
+
+<div class="topbar">
+  <div class="crumb">
+    Workspace / <span id="crumb">Overview</span>
+  </div>
+
+  <div class="search">
+    <input id="search" placeholder="Search this hub…">
+  </div>
+</div>
+
+<!-- HOME PAGE -->
+
+<section class="view active" id="home">
+
+<div class="hero">
+  <div>
+    <div class="eyebrow">Your digital workspace</div>
+    <h1>Explore. Play. Learn.</h1>
+    <p>
+      A central place for browser games, video embeds,
+      anime resources, and useful study tools.
+    </p>
+    <button class="primary" onclick="showView('games')">
+      Explore games →
+    </button>
+  </div>
+  <div style="font-size:80px">✦</div>
+</div>
+
+<div class="section-head">
+  <div>
+    <h2>Explore categories</h2>
+    <p>Choose a space to get started.</p>
+  </div>
+</div>
+
+<div class="cards">
+
+<button class="tile" data-go="games">
+  <div class="tile-icon">🎮</div>
+  <b>Browser games</b>
+  <small>Play built-in mini-games</small>
+</button>
+
+<button class="tile" data-go="video">
+  <div class="tile-icon">▶️</div>
+  <b>YouTube</b>
+  <small>Embedded videos</small>
+</button>
+
+<button class="tile" data-go="anime">
+  <div class="tile-icon">🎞️</div>
+  <b>Anime</b>
+  <small>Official streaming resources</small>
+</button>
+
+<button class="tile" data-go="study">
+  <div class="tile-icon">📚</div>
+  <b>Education</b>
+  <small>Learning resources</small>
+</button>
+
+</div>
+
+<div class="section-head">
+  <h2>Quick launch</h2>
+</div>
+
+<div class="content-grid">
+  <div class="panel">
+    <h3>Built-in games</h3>
+    <p>Lightweight games that run locally.</p>
+
+    <div class="quick-list">
+      <div>🐍 Snake <button onclick="launchGame('snake')">Play</button></div>
+      <div>⭕ Tic-Tac-Toe <button onclick="launchGame('ttt')">Play</button></div>
+      <div>🧠 Memory Match <button onclick="launchGame('memory')">Play</button></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h3>Workspace tip</h3>
+    <p>
+      Use the video viewer for content providers
+      that allow embedding.
+    </p>
+  </div>
+</div>
+
+</section>
+
+<!-- GAMES PAGE -->
+
+<section class="view" id="games">
+
+<h1 class="view-title">Browser games</h1>
+<p class="view-desc">
+  These games are built directly into this page.
+</p>
+
+<div class="game-grid">
+
+<div class="game-card">
+  <div class="tile-icon">🐍</div>
+  <h3>Snake</h3>
+  <p>Collect dots and avoid obstacles.</p>
+  <button onclick="launchGame('snake')">Start game</button>
+</div>
+
+<div class="game-card">
+  <div class="tile-icon">⭕</div>
+  <h3>Tic-Tac-Toe</h3>
+  <p>Play against a friend.</p>
+  <button onclick="launchGame('ttt')">Start game</button>
+</div>
+
+<div class="game-card">
+  <div class="tile-icon">🧠</div>
+  <h3>Memory Match</h3>
+  <p>Find all matching pairs.</p>
+  <button onclick="launchGame('memory')">Start game</button>
+</div>
+
+<div class="game-card">
+  <div class="tile-icon">⚡</div>
+  <h3>Reaction Test</h3>
+  <p>Test your reaction speed.</p>
+  <button onclick="launchGame('reaction')">Start game</button>
+</div>
+
+</div>
+
+<div class="section-head">
+  <h2>Game area</h2>
+</div>
+
+<div class="viewer">
+  <div class="viewer-bar">
+    <b id="game-title">Choose a game</b>
+  </div>
+
+  <div class="viewer-screen" id="game-content">
+    <div class="empty">
+      <div class="big">🎮</div>
+      <h3>Ready when you are</h3>
+      <p>Choose a game above.</p>
+    </div>
+  </div>
+</div>
+
+</section>
+
+<!-- VIDEO PAGE -->
+
+<section class="view" id="video">
+
+<h1 class="view-title">Video viewer</h1>
+<p class="view-desc">
+  Embed videos from providers that allow playback.
+</p>
+
+<div class="panel">
+  <h3>Embed a YouTube video</h3>
+
+  <div class="field-row">
+    <input id="yt-input"
+      placeholder="Paste a YouTube URL or video ID">
+
+    <button class="primary" onclick="loadYoutube()">
+      Load video
+    </button>
+  </div>
+</div>
+
+<div class="viewer" style="margin-top:14px">
+  <div class="viewer-bar">
+    <b id="video-title">Video player</b>
+    <button class="secondary" onclick="clearViewer()">
+      Clear
+    </button>
+  </div>
+
+  <div class="viewer-screen" id="video-screen">
+    <div class="empty">
+      <div class="big">▶️</div>
+      <h3>Your video appears here</h3>
+    </div>
+  </div>
+</div>
+
+</section>
+
+<!-- ANIME PAGE -->
+
+<section class="view" id="anime">
+
+<h1 class="view-title">Anime resources</h1>
+<p class="view-desc">
+  Official anime streaming services.
+</p>
+
+<div class="cards">
+
+<div class="tile">
+  <div class="tile-icon">🍿</div>
+  <b>Crunchyroll</b>
+  <small>Anime streaming service</small>
+  <button class="secondary"
+    onclick="embedSite('https://www.crunchyroll.com','Crunchyroll')">
+    Try viewer
+  </button>
+</div>
+
+<div class="tile">
+  <div class="tile-icon">🎬</div>
+  <b>Netflix</b>
+  <small>Movies and anime</small>
+  <button class="secondary"
+    onclick="embedSite('https://www.netflix.com','Netflix')">
+    Try viewer
+  </button>
+</div>
+
+<div class="tile">
+  <div class="tile-icon">📺</div>
+  <b>HIDIVE</b>
+  <small>Anime streaming service</small>
+  <button class="secondary"
+    onclick="embedSite('https://www.hidive.com','HIDIVE')">
+    Try viewer
+  </button>
+</div>
+
+</div>
+
+<div class="section-head">
+  <h2>Service viewer</h2>
+</div>
+
+<div class="viewer">
+  <div class="viewer-bar">
+    <b id="site-title">Service preview</b>
+    <button class="secondary" onclick="clearSite()">Clear</button>
+  </div>
+
+  <div class="viewer-screen" id="site-screen">
+    <div class="empty">
+      <div class="big">🎞️</div>
+      <h3>Select a service</h3>
+    </div>
+  </div>
+</div>
+
+</section>
+
+<!-- STUDY PAGE -->
+
+<section class="view" id="study">
+
+<h1 class="view-title">Study tools</h1>
+<p class="view-desc">Simple productivity tools.</p>
+
+<div class="content-grid">
+
+<div class="panel">
+  <h3>Focus timer</h3>
+  <p>25-minute focus session.</p>
+
+  <div id="timer"
+    style="font-size:48px;text-align:center;font-weight:bold;margin:20px">
+    25:00
+  </div>
+
+  <button class="primary" onclick="startTimer()">Start</button>
+  <button class="secondary" onclick="pauseTimer()">Pause</button>
+  <button class="secondary" onclick="resetTimer()">Reset</button>
+</div>
+
+<div class="panel">
+  <h3>Quick notes</h3>
+  <p>Write a reminder or study note.</p>
+
+  <textarea id="notes"
+    style="width:100%;height:145px;margin-top:14px;
+    background:#0b1629;border:1px solid #293a57;
+    border-radius:10px;color:white;padding:12px">
+  </textarea>
+
+  <button class="secondary"
+    onclick="document.getElementById('notes').value=''">
+    Clear notes
+  </button>
+</div>
+
+</div>
+</section>
+
+<footer>
+  GameVault • Learning & Media Workspace
+</footer>
+
+</main>
+</div>
+
+<script>
+
+// PAGE NAVIGATION
+
+const views = ['home','games','video','anime','study'];
+
+function showView(id) {
+  views.forEach(v => {
+    document.getElementById(v)
+      .classList.toggle('active',v===id);
+  });
+
+  document.querySelectorAll('#nav button')
+    .forEach(b =>
+      b.classList.toggle('active',b.dataset.view===id)
+    );
+
+  document.getElementById('crumb').textContent = id;
+}
+
+document.querySelectorAll('#nav button').forEach(b => {
+  b.addEventListener('click',()=>showView(b.dataset.view));
+});
+
+document.querySelectorAll('[data-go]').forEach(b => {
+  b.addEventListener('click',()=>showView(b.dataset.go));
+});
+
+// SEARCH
+
+document.getElementById('search').addEventListener('input',e=>{
+  const q=e.target.value.toLowerCase();
+
+  document.querySelectorAll('.tile,.game-card')
+    .forEach(el=>{
+      el.style.display =
+        el.innerText.toLowerCase().includes(q) ? '' : 'none';
+    });
+});
+
+// YOUTUBE EMBED
+
+function loadYoutube() {
+  const raw=document.getElementById('yt-input').value.trim();
+
+  const id=raw.match(
+    /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([A-Za-z0-9_-]{11})/
+  )?.[1] || (/^[A-Za-z0-9_-]{11}$/.test(raw)?raw:null);
+
+  if(!id) {
+    alert('Enter a valid YouTube URL or video ID.');
+    return;
+  }
+
+  document.getElementById('video-screen').innerHTML=`
+    <iframe
+      title="YouTube video"
+      src="https://www.youtube-nocookie.com/embed/${id}"
+      allowfullscreen
+      style="width:100%;height:65vh;border:0">
+    </iframe>
+  `;
+}
+
+function embedSite(url,name) {
+  document.getElementById('site-title').textContent=name;
+
+  document.getElementById('site-screen').innerHTML=`
+    <iframe
+      title="${name}"
+      src="${url}"
+      style="width:100%;height:65vh;border:0">
+    </iframe>
+  `;
+}
+
+function clearViewer() {
+  document.getElementById('video-screen').innerHTML='';
+}
+
+function clearSite() {
+  document.getElementById('site-screen').innerHTML='';
+}
+
+// GAMES
+
+const gc=document.getElementById('game-content');
+
+function launchGame(name) {
+  showView('games');
+
+  const titles={
+    snake:'Snake',
+    ttt:'Tic-Tac-Toe',
+    memory:'Memory Match',
+    reaction:'Reaction Test'
+  };
+
+  document.getElementById('game-title').textContent=titles[name];
+
+  if(name==='ttt') startTTT();
+  if(name==='memory') startMemory();
+  if(name==='snake') startSnake();
+  if(name==='reaction') startReaction();
+}
+
+// TIC TAC TOE
+
+function startTTT() {
+  gc.innerHTML=`
+    <div class="game-stage">
+      <h3>Tic-Tac-Toe</h3>
+      <p id="ttt-status">X goes first</p>
+      <div class="ttt" id="ttt-board">
+        ${Array.from({length:9},(_,i)=>
+          `<button data-cell="${i}"></button>`
+        ).join('')}
+      </div>
+      <button class="secondary" onclick="startTTT()">Restart</button>
+    </div>
+  `;
+
+  let board=Array(9).fill('');
+  let turn='X';
+  let done=false;
+
+  const wins=[
+    [0,1,2],[3,4,5],[6,7,8],
+    [0,3,6],[1,4,7],[2,5,8],
+    [0,4,8],[2,4,6]
+  ];
+
+  document.querySelectorAll('[data-cell]').forEach(btn=>{
+    btn.onclick=()=>{
+      const i=Number(btn.dataset.cell);
+
+      if(done || board[i]) return;
+
+      board[i]=turn;
+      btn.textContent=turn;
+
+      const win=wins.some(w=>
+        w.every(x=>board[x]===turn)
+      );
+
+      if(win) {
+        document.getElementById('ttt-status')
+          .textContent=turn+' wins!';
+        done=true;
+      }
+      else if(board.every(Boolean)) {
+        document.getElementById('ttt-status')
+          .textContent='It is a draw!';
+        done=true;
+      }
+      else {
+        turn=turn==='X'?'O':'X';
+        document.getElementById('ttt-status')
+          .textContent=turn+' goes next';
+      }
+    };
+  });
+}
+
+// MEMORY MATCH
+
+function startMemory() {
+  const vals=['🍉','🚀','🎧','🌟','🐼','⚽'];
+  const deck=[...vals,...vals].sort(()=>Math.random()-.5);
+
+  let open=[];
+  let matched=0;
+  let lock=false;
+
+  gc.innerHTML=`
+    <div class="game-stage">
+      <h3>Memory Match</h3>
+      <p id="mem-status">Find all six pairs.</p>
+      <div id="mem-board"
+        style="display:grid;grid-template-columns:repeat(4,1fr);
+        gap:8px;margin:15px auto;max-width:420px">
+      </div>
+      <button class="secondary" onclick="startMemory()">Restart</button>
+    </div>
+  `;
+
+  const board=document.getElementById('mem-board');
+
+  deck.forEach(v=>{
+    const b=document.createElement('button');
+
+    b.textContent='?';
+    b.style='height:65px;background:#1c3150;color:white;font-size:24px;border-radius:10px';
+
+    b.onclick=()=>{
+      if(lock || b.dataset.done || open.includes(b)) return;
+
+      b.textContent=v;
+      open.push(b);
+
+      if(open.length===2) {
+        if(open[0].textContent===open[1].textContent) {
+          open.forEach(x=>x.dataset.done='1');
+          matched++;
+          open=[];
+
+          document.getElementById('mem-status').textContent=
+            matched===6?'You matched every pair!':'Pairs found: '+matched+'/6';
+        }
+        else {
+          lock=true;
+
+          setTimeout(()=>{
+            open.forEach(x=>x.textContent='?');
+            open=[];
+            lock=false;
+          },750);
+        }
+      }
+    };
+
+    board.appendChild(b);
+  });
+}
+
+// REACTION TEST
+
+function startReaction() {
+  gc.innerHTML=`
+    <div class="game-stage">
+      <h3>Reaction Test</h3>
+      <p id="react-status">Press start and wait for green.</p>
+      <button class="primary" id="react-btn"
+        style="min-width:220px;height:120px;margin:15px">
+        Start
+      </button>
+      <p id="react-result"></p>
+    </div>
+  `;
+
+  const b=document.getElementById('react-btn');
+  let state='idle';
+  let timeout;
+  let start;
+
+  b.onclick=()=>{
+    if(state==='idle') {
+      state='wait';
+      b.textContent='Wait for green…';
+
+      timeout=setTimeout(()=>{
+        state='go';
+        start=performance.now();
+        b.style.background='#167e62';
+        b.textContent='TAP NOW!';
+      },1200+Math.random()*3000);
+    }
+
+    else if(state==='wait') {
+      clearTimeout(timeout);
+      state='idle';
+      b.textContent='Start again';
+      document.getElementById('react-status').textContent='Too soon!';
+    }
+
+    else if(state==='go') {
+      const ms=Math.round(performance.now()-start);
+      state='idle';
+      b.textContent='Try again';
+      b.style.background='';
+      document.getElementById('react-result').textContent=ms+' ms';
+    }
+  };
+}
+
+// SNAKE
+
+let snakeTimer=null;
+
+function startSnake() {
+  clearInterval(snakeTimer);
+
+  gc.innerHTML=`
+    <div class="game-stage">
+      <h3>Snake</h3>
+      <p>Use arrow keys or WASD.</p>
+      <canvas id="snake-canvas" width="360" height="360"
+        style="max-width:100%;background:#081426">
+      </canvas>
+      <p id="snake-score">Score: 0</p>
+      <button class="secondary" onclick="startSnake()">Restart</button>
+    </div>
+  `;
+
+  const c=document.getElementById('snake-canvas');
+  const ctx=c.getContext('2d');
+
+  const size=18;
+
+  let body=[
+    {x:9,y:9},
+    {x:8,y:9},
+    {x:7,y:9}
+  ];
+
+  let dir={x:1,y:0};
+  let food={x:14,y:9};
+  let score=0;
+  let alive=true;
+
+  function place() {
+    food={
+      x:Math.floor(Math.random()*20),
+      y:Math.floor(Math.random()*20)
+    };
+  }
+
+  function draw() {
+    ctx.fillStyle='#081426';
+    ctx.fillRect(0,0,360,360);
+
+    ctx.fillStyle='#ffcb72';
+    ctx.fillRect(food.x*size,food.y*size,size-2,size-2);
+
+    ctx.fillStyle='#65dfc0';
+
+    body.forEach(p=>{
+      ctx.fillRect(p.x*size,p.y*size,size-2,size-2);
+    });
+  }
+
+  function step() {
+    if(!alive) return;
+
+    const h={
+      x:body[0].x+dir.x,
+      y:body[0].y+dir.y
+    };
+
+    if(h.x<0 || h.y<0 || h.x>=20 || h.y>=20 ||
+       body.some(p=>p.x===h.x && p.y===h.y)) {
+      alive=false;
+      clearInterval(snakeTimer);
+      document.getElementById('snake-score').textContent=
+        'Game over — score: '+score;
+      return;
+    }
+
+    body.unshift(h);
+
+    if(h.x===food.x && h.y===food.y) {
+      score++;
+      place();
+      document.getElementById('snake-score').textContent=
+        'Score: '+score;
+    }
+    else {
+      body.pop();
+    }
+
+    draw();
+  }
+
+  document.onkeydown=e=>{
+    const k=e.key.toLowerCase();
+
+    if((k==='arrowup'||k==='w')&&dir.y!==1)
+      dir={x:0,y:-1};
+
+    if((k==='arrowdown'||k==='s')&&dir.y!==-1)
+      dir={x:0,y:1};
+
+    if((k==='arrowleft'||k==='a')&&dir.x!==1)
+      dir={x:-1,y:0};
+
+    if((k==='arrowright'||k==='d')&&dir.x!==-1)
+      dir={x:1,y:0};
+  };
+
+  draw();
+  snakeTimer=setInterval(step,125);
+}
+
+// FOCUS TIMER
+
+let timerSeconds=1500;
+let timerInterval=null;
+
+function renderTimer() {
+  document.getElementById('timer').textContent=
+    String(Math.floor(timerSeconds/60)).padStart(2,'0')+':'+
+    String(timerSeconds%60).padStart(2,'0');
+}
+
+function startTimer() {
+  if(timerInterval) return;
+
+  timerInterval=setInterval(()=>{
+    if(timerSeconds>0) {
+      timerSeconds--;
+      renderTimer();
+    }
+    else {
+      pauseTimer();
+      alert('Focus session complete!');
+    }
+  },1000);
+}
+
+function pauseTimer() {
+  clearInterval(timerInterval);
+  timerInterval=null;
+}
+
+function resetTimer() {
+  pauseTimer();
+  timerSeconds=1500;
+  renderTimer();
+}
+
+renderTimer();
+
+</script>
+</body>
+</html>
